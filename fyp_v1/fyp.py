@@ -22,22 +22,6 @@ sb = sideb.selectbox(
      ['Airasia Stock','Bitcoin']
      )
 
-@st.cache(allow_output_mutation=True)
-
-def display_stock_data():
-    presentable_data = pd.DataFrame()
-    found = True
-    day=1
-    while presentable_data.empty and day <7:
-        ytd = date.today() - timedelta(days = day)
-        presentable_data = yf.download(stock_symbol, ytd, date.today(), auto_adjust=True)
-        day = day+1
-
-        if day == 7:
-            found = False
-
-    return presentable_data, found
-
 if sb=='Airasia Stock':
     checkSharePrice(getCurrentDate())
     location = './realtimeData.csv'
@@ -76,12 +60,12 @@ if sb=='Airasia Stock':
     buyList = df_full.loc[df_full['action']==1]
     sellList = df_full.loc[df_full['action']==-1]
     fig.add_trace(go.Scatter(x=buyList['Date'], y=buyList['Close'],
-                    mode='markers', marker=dict(color="green", size=9), marker_symbol='triangle-up'))
+                    mode='markers', marker=dict(color="green", size=10), marker_symbol='triangle-up'))
     fig.add_trace(go.Scatter(x=sellList['Date'], y=sellList['Close'],
-                    mode='markers', marker=dict(color="red", size=9), marker_symbol='triangle-down'))
+                    mode='markers', marker=dict(color="red", size=10), marker_symbol='triangle-down'))
     st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
-    msg = '<p style="font-family:sans-serif; color:{}; font-size: 18px;"><strong>{}</strong></p>'.format(color, resultAction)
+    msg = '<p style="font-family:sans-serif; color:{}; font-size: 18px;">Action: <strong>{}</strong></p>'.format(color, resultAction)
     st.markdown(msg, unsafe_allow_html=True)
 
 
