@@ -10,9 +10,6 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded")
 
-# Show header
-st.title("Stock")
-
 # Creating sidebar
 sideb = st.sidebar
 
@@ -23,6 +20,9 @@ sb = sideb.selectbox(
      )
 
 if sb=='Airasia Stock':
+    # Show header
+    st.title("Airasia Stock")
+
     checkSharePrice(getCurrentDate())
     location = './realtimeData.csv'
     df_full = pd.read_csv(location, header=None ,names=['Date', 'Open', 'High', 'Low', 'Volume', 'Close', 'KLCI', 'Pos', 'Neu', 'Neg', 'dr', 'f02', 'Vol Log', 'diff', 'diff50', 'roc', 'ma_5', 'ma_200', 'ema_50'])
